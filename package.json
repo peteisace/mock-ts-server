@@ -1,35 +1,15 @@
 {
-  "name": "opentsdb-mock-server",
+  "name": "mock-ts-server",
   "version": "0.0.1",
   "description": "Mock OpenTSDB server.",
-  "author": {
-    "name": "Athan Reines",
-    "email": "kgryte@gmail.com"
-  },
-  "contributors": [
-    {}
-  ],
-  "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.js test/**/*.js",
-    "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*.js test/**/*.js --dir ./reports/coverage -- -R spec",
-    "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test/*.js test/**/*.js --dir ./reports/coveralls/coverage --report lcovonly -- -R spec && cat ./reports/coveralls/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./reports/coveralls"
-  },
+  "contributors": [],
+  "scripts": {},
   "main": "./app",
   "repository": {
     "type": "git",
     "url": "git://github.com/opentsdb-js/mock-server.git"
   },
-  "bugs": {
-    "url": "https://github.com/opentsdb-js/mock-server/issues"
-  },
-  "keywords": [
-    "opentsdb",
-    "tsdb",
-    "timeseries",
-    "mock",
-    "server",
-    "testing"
-  ],
+  "keywords": [],
   "dependencies": {
     "express": "^4.9.7"
   },
@@ -42,8 +22,8 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
+      "type": "UNLICENSED",
+      "url": "http://www.opensource.org/licenses/UNLICENSED"
     }
   ]
 }

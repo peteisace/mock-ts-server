@@ -5,7 +5,7 @@ class Query {
         this.metric = "";
         this.aggregator = "";
         this.downsample = "";
-        this.tags = {};
+        this.tags = null;
     }
 
     get aggregationDetails() {

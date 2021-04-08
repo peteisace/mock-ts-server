@@ -11,15 +11,16 @@ class TimeResponse {
     };
 
     addTag(key, value) {
-        this.tags[key] = value;
-    }
+        this.tags[key] = value;                
+    }    
     
     addAggregatedTag(key, value) {
         this.aggregatedTags[key] = value;
     }
 
-    addDatapoint(period, value) {
-        this.dps[(period / 1000).toString()] = Math.round(value);
+    addDatapoint(period, value, msResolution) {
+        period = msResolution ? period : Math.round(period / 1000);
+        this.dps[period.toString()] = Math.round(value);
     }
 }
 

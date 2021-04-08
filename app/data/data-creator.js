@@ -15,14 +15,38 @@ class DataCreator {
     createNonsense(fullQuery) {
         let toSend = [];
 
+        const baseQuery = fullQuery.queries.length > 0 ? fullQuery.queries[0] : null;        
+        var isAgg = true;
+
         for(var i = 0; i < fullQuery.queries.length; i++) {
-            const current = fullQuery.getQueryAt(i);              
+            const current = fullQuery.getQueryAt(i);   
+            
+            /* Do later.
+            if(current != baseQuery) {
+                const currentKeys = Object.keys(current.tags);
+
+                for(const prop in baseQuery.tags) {
+                    if(currentKeys.findIndex(value => value == prop) == -1) {
+                        isAgg = false;
+                        console.log("prop " + prop + " wasn't found");
+                    }
+                    
+                    if(current.tags[prop] != baseQuery.tags[prop]) {
+                        isAgg = false;
+                        console.log(current.tags[prop] + " does not equal " + baseQuery.tags[prop]);
+                    }
+                }
+            }
+
+            console.log(isAgg);
+            */
             
             // get to where we begin.
             const begin = fullQuery.startDate;
             const end = fullQuery.endDate;
 
-            toSend.push(this.#populateQuery(current, begin, end));
+            const response = this.populateQuery(fullQuery, current, begin, end);
+            toSend.push(response);
         }
 
         return toSend;
@@ -30,23 +54,24 @@ class DataCreator {
 
     /**
      * 
+     * @param {OpenTimeQuery} fullQuery
      * @param {Query} currentQuery 
      * @param {Date} begin
      * @param {Date} end 
      */
-    #populateQuery(currentQuery, begin, end) {
+    populateQuery(fullQuery, currentQuery, begin, end) {
+        
         // details of aggregation.
         let tr = new TimeResponse(currentQuery.metric);
         var aggDetails = new AggregationType(currentQuery.downsample);
 
         for(var i = begin.getTime(); i < end.getTime(); i += aggDetails.incrementInMilliseconds()) {
             const value = Math.random() * 1000;
-            tr.addDatapoint(i, value);
+            tr.addDatapoint(i, value, fullQuery.msResolution);
         }
-
-        for(const prop in currentQuery.tags) {
-            console.log("****" + prop);
-            tr.addTag(prop, currentQuery.prop);
+       
+        for(const prop in currentQuery.tags) {                        
+            tr.addTag(prop, currentQuery.tags[prop]);
         }
 
         return tr;
